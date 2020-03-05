@@ -8,16 +8,26 @@
 
 <ion-content>
 
+  <ion-select 
+    (ionChange)="onLanguageChange()" 
+    [formControl]="userLanguage">
+    <ion-select-option value="en">EN</ion-select-option>
+    <ion-select-option value="ru">RU</ion-select-option>
+  </ion-select>
+
   <ion-button 
     class="ion-button-custom"
     color="primary"
     (click)="getMyWish()"
     fill="outline">
-    Get my wish
+    {{ 'getWish' | translate }}
   </ion-button>
 
   <div class="spinner-wrap">
-    <ion-spinner *ngIf="spinner" color="secondary"></ion-spinner>
+    <ion-spinner 
+      *ngIf="spinner" 
+      color="secondary">
+    </ion-spinner>
   </div>
 
 </ion-content>

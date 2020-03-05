@@ -1,5 +1,7 @@
 {
   "name": "mywish",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

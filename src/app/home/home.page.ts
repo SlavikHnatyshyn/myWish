@@ -1,15 +1,23 @@
+// angular
 import { Component, OnDestroy, isDevMode } from '@angular/core';
+import { FormControl } from '@angular/forms';
+
+// ionic
+import { ToastController } from '@ionic/angular';
 
 // rxjs
 import { of, Subject } from 'rxjs';
 import { catchError, takeUntil, tap } from 'rxjs/operators';
 
+// ngx-translate
+import { TranslateService } from '@ngx-translate/core';
+
 // interfaces
 import { DatabaseParams } from '../interfaces/db.interface';
-import { DatabaseService } from '../services/database.service';
 
+// services
+import { DatabaseService } from '../services/database.service';
 import { environment } from '../../environments/environment';
-import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -20,13 +28,17 @@ export class HomePage implements OnDestroy {
   private readonly onDestroy$: Subject<void>;
   public myWish: string | null;
   public spinner: boolean;
+  public userLanguage: FormControl;
   constructor(
     private db: DatabaseService,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private translate: TranslateService
   ) {
     this.onDestroy$ = new Subject();
     this.myWish = null;
     this.spinner = false;
+    this.userLanguage = new FormControl(null);
+    this.setUserLanguage();
   }
 
   getMyWish() {
@@ -68,6 +80,7 @@ export class HomePage implements OnDestroy {
   async presentToast(toastOptions) {
     const options = {
       position: 'middle',
+      duration: 4000,
       color: 'secondary',
       buttons: [
         {
@@ -78,9 +91,29 @@ export class HomePage implements OnDestroy {
       ...toastOptions
     };
     const toast = await this.toastController.create({
-      ...options,
+      ...options
     });
     await toast.present();
+  }
+
+  getUserLanguage(): string {
+    const language = window.navigator.language;
+    if (language && language === 'en-US') {
+      return 'en';
+    }
+
+    return 'ru';
+  }
+
+  setUserLanguage() {
+    const userLanguage = this.getUserLanguage();
+    this.userLanguage = new FormControl(userLanguage);
+    this.translate.setDefaultLang(userLanguage);
+  }
+
+  onLanguageChange() {
+    const userLanguage = this.userLanguage.value;
+    this.translate.use(userLanguage);
   }
 
 }
