@@ -10,6 +10,7 @@ import { HomePage } from './home.page';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { MessageComponent } from '../components/message/message.component';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, '/assets/i18n/', '.json');
@@ -36,6 +37,6 @@ export function createTranslateLoader(http: HttpClient) {
       }
     ])
   ],
-  declarations: [HomePage]
+  declarations: [HomePage, MessageComponent]
 })
 export class HomePageModule {}

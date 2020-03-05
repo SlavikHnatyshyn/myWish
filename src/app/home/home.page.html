@@ -1,4 +1,4 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
     <ion-title>
       My wish
@@ -8,26 +8,22 @@
 
 <ion-content>
 
-  <ion-select 
-    (ionChange)="onLanguageChange()" 
-    [formControl]="userLanguage">
+  <ion-select (ionChange)="onLanguageChange()" [formControl]="userLanguage">
     <ion-select-option value="en">EN</ion-select-option>
     <ion-select-option value="ru">RU</ion-select-option>
   </ion-select>
 
-  <ion-button 
-    class="ion-button-custom"
-    color="primary"
-    (click)="getMyWish()"
-    fill="outline">
+  <ion-button class="ion-button-custom" color="primary" (click)="getMyWish()" fill="outline">
     {{ 'getWish' | translate }}
   </ion-button>
 
   <div class="spinner-wrap">
-    <ion-spinner 
-      *ngIf="spinner" 
-      color="secondary">
+    <ion-spinner *ngIf="spinner" color="secondary">
     </ion-spinner>
   </div>
+
+  <ng-container *ngIf="userWish$ | async as message">
+    <app-message [message]="message"></app-message>
+  </ng-container>
 
 </ion-content>
