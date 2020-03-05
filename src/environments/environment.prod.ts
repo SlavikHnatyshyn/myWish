@@ -13,5 +13,9 @@ export const environment = {
   russianTextConfig: {
     collection: 'wishes-russian',
     docId: 'russian-text'
+  },
+  englishTextConfig: {
+    collection: 'wishes-english',
+    docId: 'english-text'
   }
 };
